@@ -33,35 +33,72 @@ namespace WpfApp1
 
         private void LoadFinalIdea_Click(object sender, RoutedEventArgs e)
         {
-            // Get the final idea text
             string finalIdea = FinalIdeaTextBox.Text.Trim();
-
-            // If the final idea is empty, show an error message
-            if (string.IsNullOrWhiteSpace(finalIdea))
+            if (string.IsNullOrEmpty(finalIdea))
             {
-                MessageBox.Show("Please enter a final idea before loading.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a final idea.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // Transformations
+            // Generate transformations
             string suggestedName = finalIdea.Replace(" ", "_");
             string upperCaseName = suggestedName.ToUpper();
             string lowerCaseName = suggestedName.ToLower();
-            int characterLength = suggestedName.Length;
-            int byteLength = Encoding.UTF8.GetByteCount(suggestedName);
-
-            // Split the suggested name by underscores to get the list of words
-            string[] words = suggestedName.Split('_');
+            int charLength = finalIdea.Length;
+            int byteLength = Encoding.UTF8.GetByteCount(finalIdea);
+            var words = suggestedName.Split('_');
             int wordCount = words.Length;
 
-            // Display the results in the appropriate text boxes
+            // Set the transformed values
             SuggestedNameTextBox.Text = suggestedName;
             UpperCaseNameTextBox.Text = upperCaseName;
             LowerCaseNameTextBox.Text = lowerCaseName;
-            CharacterLengthTextBox.Text = characterLength.ToString();
+            CharacterLengthTextBox.Text = charLength.ToString();
             ByteLengthTextBox.Text = byteLength.ToString();
             WordsListTextBox.Text = "{" + string.Join(", ", words.Select(w => $"\"{w}\"")) + "}";
             WordCountTextBox.Text = wordCount.ToString();
+
+            // Handle truncation to 128 bytes
+            string truncatedName = TruncateToBytes(suggestedName, 128);
+            TruncatedTextBox.Text = truncatedName;
+
+            // Calculate and display the overflowed part
+            if (byteLength > 128)
+            {
+                int overflowStartIndex = Encoding.UTF8.GetByteCount(truncatedName);
+                string overflowedText = finalIdea.Substring(overflowStartIndex);
+                int bytesOver = byteLength - 128;
+                int charsOver = charLength - truncatedName.Length;
+
+                OverflowedTextBox.Text = overflowedText;
+                BytesOverTextBox.Text = bytesOver.ToString();
+                CharactersOverTextBox.Text = charsOver > 0 ? charsOver.ToString() : "0";
+            }
+            else
+            {
+                OverflowedTextBox.Text = string.Empty;
+                BytesOverTextBox.Text = "0";
+                CharactersOverTextBox.Text = "0";
+            }
         }
+
+        // Helper method to truncate a string to a given byte length
+        private string TruncateToBytes(string input, int maxBytes)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(input);
+            if (bytes.Length <= maxBytes) return input;
+
+            // Get the maximum length that fits within the byte limit
+            string truncated = Encoding.UTF8.GetString(bytes, 0, maxBytes);
+
+            // Check if truncation ended in the middle of a multi-byte character and adjust if needed
+            while (Encoding.UTF8.GetByteCount(truncated) > maxBytes)
+            {
+                truncated = truncated.Substring(0, truncated.Length - 1);
+            }
+
+            return truncated;
+        }
+
     }
 }
