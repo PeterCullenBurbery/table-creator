@@ -20,5 +20,16 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+        private void ButtonCreateStarterTable_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the StarterTablePage
+            MainFrame.Navigate(new StarterTablePage());
+        }
+
+        private void ButtonCreateManyToMany_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the ManyToManyTablePage
+            MainFrame.Navigate(new ManyToManyTablePage());
+        }
     }
 }
