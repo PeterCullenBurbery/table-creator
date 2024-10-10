@@ -16,19 +16,24 @@ using System.Windows.Shapes;
 namespace WpfApp1
 {
     /// <summary>
-    /// Interaction logic for StarterTablePage.xaml
+    /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class StarterTablePage : Page
+    public partial class HomePage : Page
     {
-        public StarterTablePage()
+        public HomePage()
         {
             InitializeComponent();
         }
-
-        private void ButtonHome_Click(object sender, RoutedEventArgs e)
+        private void ButtonCreateStarterTable_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate back to the HomePage
-            NavigationService.Navigate(new HomePage());
+            // Navigate to the StarterTablePage
+            NavigationService.Navigate(new StarterTablePage());
+        }
+
+        private void ButtonCreateManyToMany_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate to the ManyToManyTablePage
+            NavigationService.Navigate(new ManyToManyTablePage());
         }
     }
 }

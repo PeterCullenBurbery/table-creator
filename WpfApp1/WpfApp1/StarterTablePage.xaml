@@ -8,8 +8,9 @@
       d:DesignHeight="950" d:DesignWidth="1800"
       Title="Starter Table">
 
-    <Grid>
-        <TextBlock Text="Create a Starter Table" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10"/>
-        <!-- Add UI elements here for creating the starter table -->
-    </Grid>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button x:Name="ButtonHome" Content="Home" Click="ButtonHome_Click" Width="200" Height="50" Margin="0,0,0,10"/>
+        <TextBlock Text="Starter Table Page" FontSize="24" HorizontalAlignment="Center"/>
+        <!-- Add more UI for starter table creation here -->
+    </StackPanel>
 </Page>

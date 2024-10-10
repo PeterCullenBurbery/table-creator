@@ -19,17 +19,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
-        }
-        private void ButtonCreateStarterTable_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate to the StarterTablePage
-            MainFrame.Navigate(new StarterTablePage());
+            MainFrame.Navigate(new HomePage());
         }
 
-        private void ButtonCreateManyToMany_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate to the ManyToManyTablePage
-            MainFrame.Navigate(new ManyToManyTablePage());
-        }
     }
 }

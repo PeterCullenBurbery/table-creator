@@ -24,5 +24,10 @@ namespace WpfApp1
         {
             InitializeComponent();
         }
+        private void ButtonHome_Click(object sender, RoutedEventArgs e)
+        {
+            // Navigate back to the HomePage
+            NavigationService.Navigate(new HomePage());
+        }
     }
 }
