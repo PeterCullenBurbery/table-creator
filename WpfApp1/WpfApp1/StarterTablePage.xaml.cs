@@ -48,14 +48,18 @@ namespace WpfApp1
 
             // Transform the final idea: Replace spaces with underscores and convert to uppercase.
             string transformedName = finalIdea.Replace(" ", "_").ToUpper();
-            TransformedNameTextBox.Text = transformedName;
+            UpperCaseNameTextBox.Text = transformedName;
 
-            // Do not modify the GeneratedSQLTextBox content here.
+            // Update detailed info if output size is "Big"
+            if (OutputSizeComboBox.SelectedItem is ComboBoxItem selected && selected.Content.ToString() == "Big")
+            {
+                UpdateDetailedInfo(transformedName);
+            }
         }
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string transformedName = TransformedNameTextBox.Text;
+            string transformedName = UpperCaseNameTextBox.Text;
 
             if (string.IsNullOrWhiteSpace(transformedName))
             {
@@ -95,6 +99,64 @@ END;
             return sqlTemplate;
         }
 
+        private void InputSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (InputSizeComboBox == null || StarterIdeaTextBox == null || FinalIdeaTextBox == null)
+            {
+                return;
+            }
 
+            var selected = (InputSizeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (selected == "Big")
+            {
+                StarterIdeaTextBox.Height = 200;
+                FinalIdeaTextBox.Height = 60;
+            }
+            else
+            {
+                StarterIdeaTextBox.Height = 100;
+                FinalIdeaTextBox.Height = 40;
+            }
+        }
+
+
+        private void UpdateDetailedInfo(string transformedName)
+        {
+            UpperCaseNameTextBox.Text = transformedName.ToUpper();
+            LowerCaseNameTextBox.Text = transformedName.ToLower();
+
+            // Calculate lengths
+            int charLength = transformedName.Length;
+            int byteLength = Encoding.UTF8.GetByteCount(transformedName);
+
+            CharacterLengthTextBox.Text = charLength.ToString();
+            ByteLengthTextBox.Text = byteLength.ToString();
+
+            // Truncate to 128 bytes
+            string truncated = transformedName.Length > 128 ? transformedName.Substring(0, 128) : transformedName;
+            int overflowChars = Math.Max(0, transformedName.Length - 128);
+            int overflowBytes = Math.Max(0, byteLength - 128);
+
+            TruncatedTextBox.Text = truncated;
+            CharactersOverTextBox.Text = overflowChars.ToString();
+            BytesOverTextBox.Text = overflowBytes.ToString();
+        }
+        private void OutputSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DetailedInfoPanel == null || OutputSizeComboBox == null)
+            {
+                return;
+            }
+
+            var selected = (OutputSizeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            DetailedInfoPanel.Visibility = selected == "Big" ? Visibility.Visible : Visibility.Collapsed;
+            GeneratedSQLTextBox.Height = selected == "Big" ? 200 : 350;
+
+            // Update detailed info only if in "Big" mode.
+            if (selected == "Big" && !string.IsNullOrWhiteSpace(UpperCaseNameTextBox.Text))
+            {
+                UpdateDetailedInfo(UpperCaseNameTextBox.Text);
+            }
+        }
     }
 }
