@@ -20,69 +20,29 @@
         <!-- Home Button -->
         <Button x:Name="ButtonHome" Content="Home" Click="ButtonHome_Click" Width="100" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,10" Grid.Row="0" Grid.ColumnSpan="2"/>
 
-        <!-- Input Section for Ideas -->
+        <!-- Input Section for Ideas on the left side -->
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
             <TextBlock Text="Enter Ideas for Starter Table" FontSize="16" Margin="0,0,0,10"/>
             <TextBox x:Name="StarterIdeaTextBox" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
-            <TextBlock Text="Final Idea" FontSize="16" Margin="0,10,0,10"/>
-            <TextBox x:Name="FinalIdeaTextBox" AcceptsReturn="True" Height="50" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" TextWrapping="Wrap"/>
-            <Button x:Name="LoadFinalIdeaButton" Content="Load Final Idea" Click="LoadFinalIdea_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Enter Final Idea" FontSize="16" Margin="0,10,0,10"/>
+            <TextBox x:Name="FinalIdeaTextBox" AcceptsReturn="True" Height="40" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
+
+            <Button x:Name="SubmitFinalIdeaButton" Content="Submit Final Idea" Click="SubmitFinalIdea_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,10,0,0"/>
         </StackPanel>
 
-        <!-- Transformed Details Section -->
+        <!-- Transformed Name Section and SQL on the right side -->
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
-            <TextBlock Text="Transformed Idea Details" FontSize="16" Margin="0,0,0,10"/>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Suggested Name:" Width="150"/>
-                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="650"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="All Uppercase:" Width="150"/>
-                <TextBox x:Name="UpperCaseNameTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="All Lowercase:" Width="150"/>
-                <TextBox x:Name="LowerCaseNameTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Length in Characters:" Width="150"/>
-                <TextBox x:Name="CharacterLengthTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Length in Bytes:" Width="150"/>
-                <TextBox x:Name="ByteLengthTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="List of Words:" Width="150"/>
-                <TextBox x:Name="WordsListTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Number of Words:" Width="150"/>
-                <TextBox x:Name="WordCountTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <TextBlock Text="Validation and Truncation Details" FontSize="16" Margin="0,20,0,10"/>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Truncated to 128 Bytes:" Width="150"/>
-                <TextBox x:Name="TruncatedTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Overflowed Text:" Width="150"/>
-                <TextBox x:Name="OverflowedTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Characters Over the Limit:" Width="150"/>
-                <TextBox x:Name="CharactersOverTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Bytes Over the Limit:" Width="150"/>
-                <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
+            <TextBlock Text="Transformed Name" FontSize="16" Margin="0,0,0,10"/>
+            <TextBox x:Name="TransformedNameTextBox" IsReadOnly="True" Width="300" Margin="0,0,0,10"/>
 
-            <!-- Confirm Button Below Analysis -->
-            <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,20,0,10"/>
+            <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+
             <TextBlock Text="Generated SQL" FontSize="16" Margin="0,20,0,10"/>
-            <TextBox x:Name="GeneratedSqlTextBox" IsReadOnly="True" Height="310" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+            <TextBox x:Name="GeneratedSQLTextBox" IsReadOnly="True" AcceptsReturn="True" Height="400" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
         </StackPanel>
     </Grid>
+
+
 
 </Page>

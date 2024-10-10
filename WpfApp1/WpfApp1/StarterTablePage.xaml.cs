@@ -35,86 +35,45 @@ namespace WpfApp1
             NavigationService.Navigate(new HomePage());
         }
 
-        private void LoadFinalIdea_Click(object sender, RoutedEventArgs e)
+        private void SubmitFinalIdea_Click(object sender, RoutedEventArgs e)
         {
+            // Get the text from the final idea box and process it.
             string finalIdea = FinalIdeaTextBox.Text.Trim();
-            if (string.IsNullOrEmpty(finalIdea))
+
+            if (string.IsNullOrWhiteSpace(finalIdea))
             {
-                MessageBox.Show("Please enter a final idea.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please enter a final idea before transforming.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Generate transformations
-            string suggestedName = finalIdea.Replace(" ", "_");
-            string upperCaseName = suggestedName.ToUpper();
-            string lowerCaseName = suggestedName.ToLower();
-            int charLength = finalIdea.Length;
-            int byteLength = Encoding.UTF8.GetByteCount(finalIdea);
-            var words = suggestedName.Split('_');
-            int wordCount = words.Length;
+            // Transform the final idea: Replace spaces with underscores and convert to uppercase.
+            string transformedName = finalIdea.Replace(" ", "_").ToUpper();
+            TransformedNameTextBox.Text = transformedName;
 
-            // Set the transformed values
-            SuggestedNameTextBox.Text = suggestedName;
-            UpperCaseNameTextBox.Text = upperCaseName;
-            LowerCaseNameTextBox.Text = lowerCaseName;
-            CharacterLengthTextBox.Text = charLength.ToString();
-            ByteLengthTextBox.Text = byteLength.ToString();
-            WordsListTextBox.Text = "{" + string.Join(", ", words.Select(w => $"\"{w}\"")) + "}";
-            WordCountTextBox.Text = wordCount.ToString();
-
-            // Handle truncation to 128 bytes
-            string truncatedName = TruncateToBytes(suggestedName, 128);
-            TruncatedTextBox.Text = truncatedName;
-
-            // Calculate and display the overflowed part
-            if (byteLength > 128)
-            {
-                int overflowStartIndex = Encoding.UTF8.GetByteCount(truncatedName);
-                string overflowedText = finalIdea.Substring(overflowStartIndex);
-                int bytesOver = byteLength - 128;
-                int charsOver = charLength - truncatedName.Length;
-
-                OverflowedTextBox.Text = overflowedText;
-                BytesOverTextBox.Text = bytesOver.ToString();
-                CharactersOverTextBox.Text = charsOver > 0 ? charsOver.ToString() : "0";
-            }
-            else
-            {
-                OverflowedTextBox.Text = string.Empty;
-                BytesOverTextBox.Text = "0";
-                CharactersOverTextBox.Text = "0";
-            }
+            // Do not modify the GeneratedSQLTextBox content here.
         }
 
-        // Helper method to truncate a string to a given byte length
-        private string TruncateToBytes(string input, int maxBytes)
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(input);
-            if (bytes.Length <= maxBytes) return input;
-
-            // Get the maximum length that fits within the byte limit
-            string truncated = Encoding.UTF8.GetString(bytes, 0, maxBytes);
-
-            // Check if truncation ended in the middle of a multi-byte character and adjust if needed
-            while (Encoding.UTF8.GetByteCount(truncated) > maxBytes)
-            {
-                truncated = truncated.Substring(0, truncated.Length - 1);
-            }
-
-            return truncated;
-        }
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            string tableName = UpperCaseNameTextBox.Text.Trim();
+            string transformedName = TransformedNameTextBox.Text;
 
-            if (string.IsNullOrEmpty(tableName))
+            if (string.IsNullOrWhiteSpace(transformedName))
             {
-                MessageBox.Show("Please load a valid idea first.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please transform a name before confirming.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Generate the SQL template
-            string sqlTemplate =
+            // Generate SQL for the transformed name.
+            string sqlTemplate = GenerateSQL(transformedName);
+            GeneratedSQLTextBox.Text = sqlTemplate;
+
+            
+        }
+
+        private string GenerateSQL(string tableName)
+        {
+            // Template for creating the table.
+            string sqlTemplate = 
 $@"CREATE TABLE {tableName} (
     {tableName}_id         RAW(16) DEFAULT sys_guid() PRIMARY KEY,
     {tableName}            VARCHAR2(4000),
@@ -132,36 +91,10 @@ CREATE OR REPLACE TRIGGER set_date_updated_{tableName}
 BEGIN
     :new.date_updated := systimestamp;
 END;
-/
-";
-
-            // Display the generated SQL in the TextBox
-            GeneratedSqlTextBox.Text = sqlTemplate;
-
-            // Optionally, you can directly execute the SQL here if needed
-            // ExecuteSql(sqlTemplate);
+/";
+            return sqlTemplate;
         }
 
-        private void ExecuteSql(string sql)
-        {
-            try
-            {
-                using (var connection = new OracleConnection(connectionString))
-                {
-                    connection.Open();
 
-                    using (var command = new OracleCommand(sql, connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Table created successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error creating table: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
     }
 }
