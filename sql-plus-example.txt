@@ -1,0 +1,32 @@
+PowerShell 7.4.5
+PS C:\Users\peter> sqlplus Kingdom_Rush/1234@localhost:1521/Kingdom_Rushnot_toomany_column.localdomain
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Wed Oct 9 21:32:23 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Wed Oct 09 2024 21:29:37 -04:00
+
+Connected to:
+Oracle Database 21c Enterprise Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> @C:\Users\peter\git\KINGDOM-RUSH-PDB-THAT-I-LIKE-WHERE-I-WILL-NOT-ADD-TOO-MANY-COLUMNS\oracle\difficulty.sql
+
+Table created.
+
+
+Trigger created.
+
+SQL> @"C:\file-name-with-spaces-sql-script\spaces folder\play-mode.sql"
+
+Table created.
+
+
+Trigger created.
+
+SQL> exit
+Disconnected from Oracle Database 21c Enterprise Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+PS C:\Users\peter>
