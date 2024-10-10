@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace WpfApp1
     /// </summary>
     public partial class StarterTablePage : Page
     {
+        private readonly string connectionString;
         public StarterTablePage()
         {
             InitializeComponent();
+            connectionString = "User Id=sys;Password=1234;Data Source=localhost:1521/orcl.localdomain;DBA Privilege=SYSDBA;";
+
         }
 
         private void ButtonHome_Click(object sender, RoutedEventArgs e)
@@ -99,6 +103,65 @@ namespace WpfApp1
 
             return truncated;
         }
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            string tableName = UpperCaseNameTextBox.Text.Trim();
 
+            if (string.IsNullOrEmpty(tableName))
+            {
+                MessageBox.Show("Please load a valid idea first.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Generate the SQL template
+            string sqlTemplate =
+$@"CREATE TABLE {tableName} (
+    {tableName}_id         RAW(16) DEFAULT sys_guid() PRIMARY KEY,
+    {tableName}            VARCHAR2(4000),
+    -- Additional columns for note and dates
+    note                   VARCHAR2(4000),  -- General-purpose note field
+    date_created           TIMESTAMP(9) WITH TIME ZONE DEFAULT systimestamp(9) NOT NULL,
+    date_updated           TIMESTAMP(9) WITH TIME ZONE,
+    date_created_or_updated TIMESTAMP(9) WITH TIME ZONE GENERATED ALWAYS AS ( coalesce(date_updated, date_created) ) VIRTUAL
+);
+
+-- Trigger to update date_updated for {tableName}
+CREATE OR REPLACE TRIGGER set_date_updated_{tableName}
+    BEFORE UPDATE ON {tableName}
+    FOR EACH ROW
+BEGIN
+    :new.date_updated := systimestamp;
+END;
+/
+";
+
+            // Display the generated SQL in the TextBox
+            GeneratedSqlTextBox.Text = sqlTemplate;
+
+            // Optionally, you can directly execute the SQL here if needed
+            // ExecuteSql(sqlTemplate);
+        }
+
+        private void ExecuteSql(string sql)
+        {
+            try
+            {
+                using (var connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (var command = new OracleCommand(sql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Table created successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating table: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

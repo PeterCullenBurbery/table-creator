@@ -23,10 +23,10 @@
         <!-- Input Section for Ideas -->
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
             <TextBlock Text="Enter Ideas for Starter Table" FontSize="16" Margin="0,0,0,10"/>
-            <TextBox x:Name="StarterIdeaTextBox" AcceptsReturn="True" Height="150" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
+            <TextBox x:Name="StarterIdeaTextBox" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
             <TextBlock Text="Final Idea" FontSize="16" Margin="0,10,0,10"/>
-            <TextBox x:Name="FinalIdeaTextBox" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
-            <Button x:Name="LoadFinalIdeaButton" Content="Load Final Idea" Click="LoadFinalIdea_Click" Width="150" Height="40" HorizontalAlignment="Left"/>
+            <TextBox x:Name="FinalIdeaTextBox" AcceptsReturn="True" Height="50" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" TextWrapping="Wrap"/>
+            <Button x:Name="LoadFinalIdeaButton" Content="Load Final Idea" Click="LoadFinalIdea_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,0,0,10"/>
         </StackPanel>
 
         <!-- Transformed Details Section -->
@@ -34,7 +34,7 @@
             <TextBlock Text="Transformed Idea Details" FontSize="16" Margin="0,0,0,10"/>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <TextBlock Text="Suggested Name:" Width="150"/>
-                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="300"/>
+                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="650"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <TextBlock Text="All Uppercase:" Width="150"/>
@@ -77,6 +77,12 @@
                 <TextBlock Text="Bytes Over the Limit:" Width="150"/>
                 <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" Width="300"/>
             </StackPanel>
+
+            <!-- Confirm Button Below Analysis -->
+            <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,20,0,10"/>
+            <TextBlock Text="Generated SQL" FontSize="16" Margin="0,20,0,10"/>
+            <TextBox x:Name="GeneratedSqlTextBox" IsReadOnly="True" Height="310" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
         </StackPanel>
     </Grid>
+
 </Page>
