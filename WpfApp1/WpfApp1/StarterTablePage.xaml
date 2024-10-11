@@ -49,32 +49,36 @@
 
             <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,10,0,0"/>
 
-            <!-- Detailed Information Panel -->
+            <!-- Compact Detailed Information Panel -->
             <StackPanel x:Name="DetailedInfoPanel" Margin="0,20,0,10" Visibility="Collapsed">
                 <TextBlock Text="Detailed Information" FontSize="16" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Vertical" Margin="0,5,0,5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Chars" ToolTip="Length in Characters" Margin="0,0,5,0"/>
+                        <TextBox x:Name="CharacterLengthTextBox" IsReadOnly="True" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Bytes" ToolTip="Length in Bytes" Margin="0,0,5,0"/>
+                        <TextBox x:Name="ByteLengthTextBox" IsReadOnly="True" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Over Chars" ToolTip="Characters Over the Limit" Margin="0,0,5,0"/>
+                        <TextBox x:Name="CharactersOverTextBox" IsReadOnly="True" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Over Bytes" ToolTip="Bytes Over the Limit" Margin="0,0,5,0"/>
+                        <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+
                 <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Chars:" ToolTip="Number of Characters" Margin="0,0,0,2"/>
-                    <TextBox x:Name="CharacterLengthTextBox" IsReadOnly="True" Width="100"/>
+                    <TextBlock Text="Lowercase" ToolTip="Lowercase Version" Margin="0,0,0,2"/>
+                    <TextBox x:Name="LowerCaseNameTextBox" IsReadOnly="True" Width="850"/>
                 </StackPanel>
                 <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Bytes:" ToolTip="Number of Bytes" Margin="0,0,0,2"/>
-                    <TextBox x:Name="ByteLengthTextBox" IsReadOnly="True" Width="100"/>
-                </StackPanel>
-                <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Over Chars:" ToolTip="Characters Over the Limit" Margin="0,0,0,2"/>
-                    <TextBox x:Name="CharactersOverTextBox" IsReadOnly="True" Width="100"/>
-                </StackPanel>
-                <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Over Bytes:" ToolTip="Bytes Over the Limit" Margin="0,0,0,2"/>
-                    <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" Width="100"/>
-                </StackPanel>
-                <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Lowercase" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBox x:Name="LowerCaseNameTextBox" IsReadOnly="True" Width="965" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-                </StackPanel>
-                <StackPanel Margin="0,5,0,5">
-                    <TextBlock Text="Truncated to 128" FontSize="16" Margin="0,0,0,5"/>
-                    <TextBox x:Name="TruncatedTextBox" IsReadOnly="True" Width="965" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+                    <TextBlock Text="Truncated to 128" ToolTip="Truncated Name to 128 Bytes" Margin="0,0,0,2"/>
+                    <TextBox x:Name="TruncatedTextBox" IsReadOnly="True" Width="850"/>
                 </StackPanel>
             </StackPanel>
 
