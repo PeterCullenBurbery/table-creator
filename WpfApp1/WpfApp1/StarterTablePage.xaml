@@ -34,7 +34,7 @@
             <TextBlock Text="Transformed Idea Details" FontSize="16" Margin="0,0,0,10"/>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <TextBlock Text="Suggested Name:" Width="150"/>
-                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="650"/>
+                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="300"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                 <TextBlock Text="All Uppercase:" Width="150"/>
