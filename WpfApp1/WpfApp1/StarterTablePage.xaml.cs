@@ -150,7 +150,7 @@ END;
 
             var selected = (OutputSizeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             DetailedInfoPanel.Visibility = selected == "Big" ? Visibility.Visible : Visibility.Collapsed;
-            GeneratedSQLTextBox.Height = selected == "Big" ? 200 : 350;
+            GeneratedSQLTextBox.Height = selected == "Big" ? 400 : 450;
 
             // Update detailed info only if in "Big" mode.
             if (selected == "Big" && !string.IsNullOrWhiteSpace(UpperCaseNameTextBox.Text))
