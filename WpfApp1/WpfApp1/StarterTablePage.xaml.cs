@@ -163,5 +163,33 @@ END;
                 MessageBox.Show($"Error creating table: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void InputSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (InputSizeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            StarterIdeaTextBox.Height = selected == "Big" ? 200 : 100;
+            FinalIdeaTextBox.Height = selected == "Big" ? 70 : 50;
+        }
+
+        private void OutputSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = (OutputSizeComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            DetailedInfoPanel.Visibility = selected == "Big" ? Visibility.Visible : Visibility.Collapsed;
+            GeneratedSqlTextBox.Height = selected == "Big" ? 150 : 250;
+            if (selected == "Big" && !string.IsNullOrWhiteSpace(UpperCaseNameTextBox.Text))
+            {
+                UpdateDetailedInfo(UpperCaseNameTextBox.Text);
+            }
+        }
+
+        private void UpdateDetailedInfo(string transformedName)
+        {
+            LowerCaseNameTextBox.Text = transformedName.ToLower();
+            CharacterLengthTextBox.Text = transformedName.Length.ToString();
+            ByteLengthTextBox.Text = Encoding.UTF8.GetByteCount(transformedName).ToString();
+            CharactersOverTextBox.Text = (transformedName.Length > 128 ? (transformedName.Length - 128).ToString() : "0");
+            BytesOverTextBox.Text = (Encoding.UTF8.GetByteCount(transformedName) > 128 ?
+                                      (Encoding.UTF8.GetByteCount(transformedName) - 128).ToString() : "0");
+        }
+
     }
 }

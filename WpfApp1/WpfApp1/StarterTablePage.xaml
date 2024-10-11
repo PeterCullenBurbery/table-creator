@@ -23,66 +23,44 @@
         <!-- Input Section for Ideas -->
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
             <TextBlock Text="Enter Ideas for Starter Table" FontSize="16" Margin="0,0,0,10"/>
+            <ComboBox x:Name="InputSizeComboBox" SelectionChanged="InputSizeComboBox_SelectionChanged" Width="100" Margin="0,0,0,10">
+                <ComboBoxItem Content="Small" IsSelected="True"/>
+                <ComboBoxItem Content="Big"/>
+            </ComboBox>
             <TextBox x:Name="StarterIdeaTextBox" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"/>
             <TextBlock Text="Final Idea" FontSize="16" Margin="0,10,0,10"/>
             <TextBox x:Name="FinalIdeaTextBox" AcceptsReturn="True" Height="50" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" TextWrapping="Wrap"/>
             <Button x:Name="LoadFinalIdeaButton" Content="Load Final Idea" Click="LoadFinalIdea_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,0,0,10"/>
         </StackPanel>
 
-        <!-- Transformed Details Section -->
+        <!-- Information Section -->
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
-            <TextBlock Text="Transformed Idea Details" FontSize="16" Margin="0,0,0,10"/>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Suggested Name:" Width="150"/>
-                <TextBox x:Name="SuggestedNameTextBox" IsReadOnly="True" Width="650"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="All Uppercase:" Width="150"/>
-                <TextBox x:Name="UpperCaseNameTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="All Lowercase:" Width="150"/>
-                <TextBox x:Name="LowerCaseNameTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Length in Characters:" Width="150"/>
-                <TextBox x:Name="CharacterLengthTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Length in Bytes:" Width="150"/>
-                <TextBox x:Name="ByteLengthTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="List of Words:" Width="150"/>
-                <TextBox x:Name="WordsListTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Number of Words:" Width="150"/>
-                <TextBox x:Name="WordCountTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <TextBlock Text="Validation and Truncation Details" FontSize="16" Margin="0,20,0,10"/>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Truncated to 128 Bytes:" Width="150"/>
-                <TextBox x:Name="TruncatedTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Overflowed Text:" Width="150"/>
-                <TextBox x:Name="OverflowedTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Characters Over the Limit:" Width="150"/>
-                <TextBox x:Name="CharactersOverTextBox" IsReadOnly="True" Width="300"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                <TextBlock Text="Bytes Over the Limit:" Width="150"/>
-                <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" Width="300"/>
+            <TextBlock Text="Information" FontSize="16" Margin="0,0,0,10"/>
+            <ComboBox x:Name="OutputSizeComboBox" SelectionChanged="OutputSizeComboBox_SelectionChanged" Width="100" Margin="0,0,0,10">
+                <ComboBoxItem Content="Small" IsSelected="True"/>
+                <ComboBoxItem Content="Big"/>
+            </ComboBox>
+
+            <StackPanel Orientation="Vertical" Margin="0,5,0,5">
+                <TextBlock Text="Uppercase:" Width="100"/>
+                <TextBox x:Name="UpperCaseNameTextBox" IsReadOnly="True" Width="300" Margin="0,0,0,5"/>
             </StackPanel>
 
-            <!-- Confirm Button Below Analysis -->
-            <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,20,0,10"/>
+            <!-- Detailed Info Only Shown in Big Mode -->
+            <StackPanel x:Name="DetailedInfoPanel" Visibility="Collapsed" Margin="0,5,0,5">
+                <TextBox x:Name="LowerCaseNameTextBox" IsReadOnly="True" Width="300" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Vertical">
+                    <TextBox x:Name="CharacterLengthTextBox" IsReadOnly="True" ToolTip="Number of Characters" Width="100"/>
+                    <TextBox x:Name="ByteLengthTextBox" IsReadOnly="True" ToolTip="Number of Bytes" Width="100"/>
+                    <TextBox x:Name="CharactersOverTextBox" IsReadOnly="True" ToolTip="Characters Over the Limit" Width="100"/>
+                    <TextBox x:Name="BytesOverTextBox" IsReadOnly="True" ToolTip="Bytes Over the Limit" Width="100"/>
+                </StackPanel>
+            </StackPanel>
+
+            <Button x:Name="ConfirmButton" Content="Confirm" Click="ConfirmButton_Click" Width="150" Height="40" HorizontalAlignment="Left" Margin="0,10,0,10"/>
+
             <TextBlock Text="Generated SQL" FontSize="16" Margin="0,20,0,10"/>
-            <TextBox x:Name="GeneratedSqlTextBox" IsReadOnly="True" Height="310" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+            <TextBox x:Name="GeneratedSqlTextBox" IsReadOnly="True" Height="200" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
         </StackPanel>
     </Grid>
-
 </Page>
